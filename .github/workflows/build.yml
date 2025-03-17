@@ -40,12 +40,12 @@ jobs:
 
     steps:
     - name: Download artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: win-dance-amd64
         path: ./builds/amd64
     - name: Download artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: win-dance-386
         path: ./builds/386
