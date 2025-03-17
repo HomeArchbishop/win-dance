@@ -49,6 +49,16 @@ jobs:
       with:
         name: win-dance-386
         path: ./builds/386
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: win-dance-arm64
+        path: ./builds/arm64
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: win-dance-arm
+        path: ./builds/arm
 
     - name: Create Release
       id: create_release
