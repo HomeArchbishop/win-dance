@@ -4,6 +4,8 @@
 
 Compile a video into a program that plays the video on the desktop using multiple bouncing windows.
 
+![demo.gif](docs/demo.gif)
+
 ## Requirements
 
 - Platform: Windows
