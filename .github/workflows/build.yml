@@ -1,0 +1,101 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        goarch: [amd64, 386, arm64, arm]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.22.5'
+
+    - name: Build
+      run: |
+        go env -w GOARCH=${{ matrix.goarch }}
+        go build -o win-dance-${{ matrix.goarch }}.exe
+
+    - name: Archive build
+      uses: actions/upload-artifact@v2
+      with:
+        name: win-dance-${{ matrix.goarch }}
+        path: win-dance-${{ matrix.goarch }}.exe
+
+  release:
+    needs: build
+    runs-on: windows-latest
+
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: win-dance-amd64
+        path: ./builds/amd64
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: win-dance-386
+        path: ./builds/386
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset (amd64)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./builds/amd64/win-dance-amd64.exe
+        asset_name: win-dance-amd64.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Asset (386)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./builds/386/win-dance-386.exe
+        asset_name: win-dance-386.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Asset (arm64)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./builds/arm64/win-dance-arm64.exe
+        asset_name: win-dance-arm64.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Asset (arm)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./builds/arm/win-dance-arm.exe
+        asset_name: win-dance-arm.exe
+        asset_content_type: application/octet-stream
