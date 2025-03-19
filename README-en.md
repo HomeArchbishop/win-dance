@@ -45,5 +45,5 @@ win-dance INPUT_VIDEO --output OUTPUT_EXE [--workdir=WORK_DIR] \
 For example, command as below will compile `video/badapple.mp4` into a executable file `./badapple.exe` with fps=40 and vertical-resolution=120, using `temp` as temporary directory.
 
 ```sh
-win-dance video/badapple.mp4 ./badapple.exe -f 40 -r 120 -w temp
+win-dance video/badapple.mp4 -o ./badapple.exe -f 40 -r 120 -w temp
 ```

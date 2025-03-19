@@ -44,5 +44,5 @@ win-dance INPUT_VIDEO --output OUTPUT_EXE [--workdir=WORK_DIR] \
 例如，下面的命令将 `video/badapple.mp4` 编译成一个名为 `./badapple.exe` 的可执行文件，帧率为 40，垂直分辨率为 120，并使用 `temp` 作为临时目录。
 
 ```sh
-win-dance video/badapple.mp4 ./badapple.exe -f 40 -r 120 -w temp
+win-dance video/badapple.mp4 -o ./badapple.exe -f 40 -r 120 -w temp
 ```
