@@ -46,3 +46,7 @@ win-dance INPUT_VIDEO --output OUTPUT_EXE [--workdir=WORK_DIR] \
 ```sh
 win-dance video/badapple.mp4 -o ./badapple.exe -f 40 -r 120 -w temp
 ```
+
+## License
+
+[MIT License](./LICENSE)

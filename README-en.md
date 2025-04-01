@@ -47,3 +47,7 @@ For example, command as below will compile `video/badapple.mp4` into a executabl
 ```sh
 win-dance video/badapple.mp4 -o ./badapple.exe -f 40 -r 120 -w temp
 ```
+
+## License
+
+[MIT License](./LICENSE)
